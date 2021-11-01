@@ -19,7 +19,7 @@ async function run() {
 
 
         // GET API (get all products)
-        app.get('/packages', async(req, res) => {
+        app.get('/', async(req, res) => {
             const cursor = packageCollection.find({});
             const packages = await cursor.toArray();
             res.send(packages);
