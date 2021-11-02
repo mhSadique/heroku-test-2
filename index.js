@@ -50,8 +50,16 @@ async function run() {
             const filter = {_id: ObjectId(id)};
             const updatedStatus = {$set: changedStatus};
             const result = await orderDetailsCollection.updateOne(filter, updatedStatus);
-            console.log(result);
             res.json(result);
+        })
+
+        // GET API (get a single product)
+        app.get('/order/:id', async(req, res) => {
+            const id = req.params.id;
+            console.log(id);
+            const query = {_id: ObjectId(id)};
+            const result = await orderDetailsCollection.findOne(query);
+            res.send(JSON.stringify(result));
         })
 
 
