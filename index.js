@@ -30,7 +30,9 @@ async function run() {
         app.post('/save-order-details', async(req, res) => {
             const orderDetails = req.body;
             const result = await orderDetailsCollection.insertOne(orderDetails);
-            res.json(result)
+            if (result.insertedId) {
+                res.json('Order accepted');
+            }
         })
 
 
