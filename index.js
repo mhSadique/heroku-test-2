@@ -26,13 +26,21 @@ async function run() {
             res.send(packages);
         })
 
-
+        // POST API (save a single order from user)
         app.post('/save-order-details', async(req, res) => {
             const orderDetails = req.body;
             const result = await orderDetailsCollection.insertOne(orderDetails);
             if (result.insertedId) {
                 res.json('Order accepted');
             }
+        })
+
+
+        // GET API (get all orders)
+        app.get('/all-orders', async(req, res) => {
+            const cursor = orderDetailsCollection.find({});
+            const orders = await cursor.toArray();
+            res.send(orders);
         })
 
 
