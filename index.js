@@ -62,6 +62,16 @@ async function run() {
             res.send(JSON.stringify(result));
         })
 
+        // DELETE API (delete a single order)
+        app.delete('/cancel-order/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await orderDetailsCollection.deleteOne(query);
+            if (result.deletedCount === 1) {
+                res.send(JSON.stringify(result));
+            }
+        })
+
 
     }
     finally {
