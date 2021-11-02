@@ -53,13 +53,34 @@ async function run() {
             res.json(result);
         })
 
-        // GET API (get a single product)
+        // GET API (get a single product found by id)
         app.get('/order/:id', async(req, res) => {
             const id = req.params.id;
             console.log(id);
             const query = {_id: ObjectId(id)};
             const result = await orderDetailsCollection.findOne(query);
             res.send(JSON.stringify(result));
+        })
+
+        // GET API (get a single product found by id from the packages)
+        app.get('/ordered-package-by-id/:id', async(req, res) => {
+            const id = req.params.id;
+            console.log('got your id : ', id);
+            const query = {_id: ObjectId(id)};
+            const result = await packageCollection.findOne(query);
+            res.send(JSON.stringify(result));
+        })
+
+        // GET API (get a single product found by email)
+        app.get('/order-by-email/:email', async(req, res) => {
+            const userEmail = req.params.email;
+            console.log(userEmail);
+            const query = {userEmail: userEmail};
+
+            const cursor = orderDetailsCollection.find(query);
+            const ordersByEmail = await cursor.toArray();
+            res.send(JSON.stringify(ordersByEmail));
+            // res.json('got your email')
         })
 
         // DELETE API (delete a single order)
