@@ -47,11 +47,11 @@ async function run() {
         app.put('/approve-order/:id', async(req, res) => {
             const id = req.params.id;
             const changedStatus = req.body;
-            // const filter = {_id: ObjectId(id)};
-            // const updatedStatus = {$set: changedStatus};
-            // const result = await orderDetailsCollection(filter, updatedStatus);
-            console.log(id);
-            res.json('hello');
+            const filter = {_id: ObjectId(id)};
+            const updatedStatus = {$set: changedStatus};
+            const result = await orderDetailsCollection.updateOne(filter, updatedStatus);
+            console.log(result);
+            res.json(result);
         })
 
 
