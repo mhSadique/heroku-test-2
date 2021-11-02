@@ -16,6 +16,7 @@ async function run() {
         await mongoClient.connect();
         const database = mongoClient.db('around_the_world');
         const packageCollection = database.collection('travel_packages');
+        const orderDetailsCollection = database.collection('package_order_with_user_email');
 
 
         // GET API (get all products)
@@ -25,6 +26,12 @@ async function run() {
             res.send(packages);
         })
 
+
+        app.post('/save-order-details', async(req, res) => {
+            const orderDetails = req.body;
+            const result = await orderDetailsCollection.insertOne(orderDetails);
+            res.json(result)
+        })
 
 
     }
