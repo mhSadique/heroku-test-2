@@ -43,6 +43,17 @@ async function run() {
             res.send(orders);
         })
 
+        // APPROVE pending order
+        app.put('/approve-order/:id', async(req, res) => {
+            const id = req.params.id;
+            const changedStatus = req.body;
+            // const filter = {_id: ObjectId(id)};
+            // const updatedStatus = {$set: changedStatus};
+            // const result = await orderDetailsCollection(filter, updatedStatus);
+            console.log(id);
+            res.json('hello');
+        })
+
 
     }
     finally {
