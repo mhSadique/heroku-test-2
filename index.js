@@ -35,6 +35,15 @@ async function run() {
             }
         })
 
+        // POST API (save a single package provided by the admin)
+        app.post('/save-package-details', async(req, res) => {
+            const orderDetails = req.body;
+            const result = await packageCollection.insertOne(orderDetails);
+            if (result.insertedId) {
+                res.json('Package stored in database.');
+            }
+        })
+
 
         // GET API (get all orders)
         app.get('/all-orders', async(req, res) => {
