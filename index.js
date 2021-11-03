@@ -65,14 +65,14 @@ async function run() {
         // GET API (get a single product found by id from the packages)
         app.get('/ordered-package-by-id/:id', async(req, res) => {
             const id = req.params.id;
-            console.log('got your id : ', id);
+            // console.log('got your id : ', id);
             const query = {_id: ObjectId(id)};
             const result = await packageCollection.findOne(query);
             res.send(JSON.stringify(result));
         })
 
         // GET API (get a single product found by email)
-        app.get('/order-by-email/:email', async(req, res) => {
+        app.get('/order-by-email/:email', async(req, res) => { // suspicious change here
             const userEmail = req.params.email;
             console.log(userEmail);
             const query = {userEmail: userEmail};
@@ -83,11 +83,25 @@ async function run() {
             // res.json('got your email')
         })
 
-        // DELETE API (delete a single order)
+        // DELETE API (delete a single order by id)
         app.delete('/cancel-order/:id', async (req, res) => {
             const id = req.params.id;
+            console.log('got your id : ', id);
             const query = {_id: ObjectId(id)};
             const result = await orderDetailsCollection.deleteOne(query);
+            console.log(result);
+            if (result.deletedCount === 1) {
+                res.send(JSON.stringify(result));
+            }
+        })
+
+        // DELETE API (delete a single order by email)
+        app.delete('/cancel-order-by-email/:email', async (req, res) => {
+            const email = req.params.email;
+            console.log('got your email : ', email);
+            const query = {userEmail: email};
+            const result = await orderDetailsCollection.deleteOne(query);
+            console.log(result);
             if (result.deletedCount === 1) {
                 res.send(JSON.stringify(result));
             }
